@@ -1,3 +1,3 @@
-const SALES_COLLECTION = '@myapp:sales'
+const NOTAS_COLLECTION = "@myapp:notas";
 
-export {SALES_COLLECTION}
+export { NOTAS_COLLECTION };

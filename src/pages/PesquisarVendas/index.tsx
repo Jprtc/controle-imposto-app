@@ -1,37 +1,36 @@
-import { useState,useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Header } from "../../components/Header";
 import { Container, ContainerText, StyledText } from "./styles";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { ScrollView, Text, View } from "react-native";
 import { SalesCard } from "../../components/SalesCard";
-import { storageSalesDTO } from "../../storage/storageSalesDTO";
-import { salesGetAll } from "../../storage/sales/salesGetAll";
+import { storageNotasDTO } from "../../storage/storageNotasDTO";
+import { notasGetAll } from "../../storage/notas/notasGetAll";
 import { Alert } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-
 export function PesquisarVendas() {
-  const [cpf, setCpf] = useState("")
-  const [produto, setProduto] = useState('')
-  const [results, setResults] = useState<storageSalesDTO[]>([]);
+  const [cpf, setCpf] = useState("");
+  const [produto, setProduto] = useState("");
+  const [results, setResults] = useState<storageNotasDTO[]>([]);
 
-
-  useFocusEffect(useCallback(() => {
-    setCpf('')
-    setProduto('')
-    setResults([])
-  },[]))
-
+  useFocusEffect(
+    useCallback(() => {
+      setCpf("");
+      setProduto("");
+      setResults([]);
+    }, [])
+  );
 
   const handleSearch = async () => {
     if (!cpf && !produto) {
       Alert.alert("Favor preencher pelo menos um dos campos.");
       return;
     }
-  
-    const data = await salesGetAll();
-  
+
+    const data = await notasGetAll();
+
     const filteredData = data.filter((result) => {
       if (cpf && produto) {
         return (
@@ -43,10 +42,9 @@ export function PesquisarVendas() {
         return result.nomeProduto.includes(produto);
       }
     });
-    
+
     setResults(filteredData);
   };
-
 
   return (
     <Container>
@@ -67,7 +65,7 @@ export function PesquisarVendas() {
 
       <Button title="Pesquisar" onPress={handleSearch} />
 
-        <ScrollView>
+      <ScrollView>
         {results.map((result, index) => {
           return (
             <SalesCard
@@ -79,9 +77,7 @@ export function PesquisarVendas() {
             />
           );
         })}
-        </ScrollView>
-       
-
+      </ScrollView>
     </Container>
   );
 }
