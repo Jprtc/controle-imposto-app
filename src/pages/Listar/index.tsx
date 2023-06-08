@@ -9,13 +9,17 @@ import { storageNotasDTO } from "../../storage/storageNotasDTO";
 import { notasGetAll } from "../../storage/notas/notasGetAll";
 import { useFocusEffect } from "@react-navigation/native";
 
-export function ListarVendas() {
+export function Listar() {
   const [results, setResults] = useState<storageNotasDTO[]>([]);
 
   const fetchData = async () => {
     const data = await notasGetAll();
     const orderedData = data.sort((a, b) => {
-      return b.dataVenda < a.dataVenda ? -1 : b.dataVenda > a.dataVenda ? 1 : 0;
+      return b.dataNotaFiscal < a.dataNotaFiscal
+        ? -1
+        : b.dataNotaFiscal > a.dataNotaFiscal
+        ? 1
+        : 0;
     });
     console.log(orderedData);
     setResults(orderedData);
@@ -29,7 +33,7 @@ export function ListarVendas() {
 
   return (
     <Container>
-      <Header title="Listar Vendas" />
+      <Header title="Listar Notas Fiscais" />
 
       {!results || results.length === 0 ? (
         <View>
@@ -41,10 +45,12 @@ export function ListarVendas() {
             return (
               <SalesCard
                 key={index}
-                dataVenda={result.dataVenda}
-                nomeProduto={result.nomeProduto}
-                valorVenda={result.valorVenda}
-                cpfFunc={result.cpfFunc}
+                codigoImposto={result.codigoImposto}
+                dataNotaFiscal={result.dataNotaFiscal}
+                fornecedor={result.fornecedor}
+                notaFiscal={result.notaFiscal}
+                produto={result.produto}
+                valorImposto={result.valorImposto}
               />
             );
           })}

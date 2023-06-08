@@ -12,38 +12,51 @@ import { ScrollView, Text } from "react-native";
 import { Alert } from "react-native";
 
 export function Cadastro() {
-  const [cpf, setCpf] = useState("");
-  const [nomeProduto, setNomeProduto] = useState("");
-  const [valorVenda, setValorVenda] = useState("");
-  const [dataVenda, setDataVenda] = useState("");
+  const [notaFiscal, setNotaFiscal] = useState("");
+  const [produto, setProduto] = useState("");
+  const [codigoImposto, setCodigoImposto] = useState("");
+  const [valorImposto, setValorImposto] = useState("");
+  const [fornecedor, setFornecedor] = useState("");
+  const [dataNotaFiscal, setDataNotaFiscal] = useState("");
 
-  const allowedCpfs = ["123456", "654321", "012345"];
+  const allowedImpostoCodes = ["1708", "3770", "3746"];
 
   const sendData = async () => {
-    if (!cpf || !nomeProduto || !valorVenda || !dataVenda) {
+    if (
+      !notaFiscal ||
+      !produto ||
+      !codigoImposto ||
+      !valorImposto ||
+      !fornecedor ||
+      !dataNotaFiscal
+    ) {
       Alert.alert("Todos os campos precisam ser preenchidos!");
       return;
     }
 
-    if (!allowedCpfs.includes(cpf)) {
-      Alert.alert("CPF não autorizado!");
+    if (!allowedImpostoCodes.includes(codigoImposto)) {
+      Alert.alert("Código de Imposto não autorizado!");
       return;
     }
 
     const createdData = {
-      cpfFunc: cpf,
-      nomeProduto,
-      valorVenda: formatAmount(valorVenda),
-      dataVenda: convertDate(dataVenda),
+      notaFiscal,
+      produto,
+      codigoImposto,
+      valorImposto: formatAmount(valorImposto),
+      fornecedor,
+      dataNotaFiscal: convertDate(dataNotaFiscal),
     };
     await notaCreate(createdData);
     console.log(createdData);
 
-    Alert.alert("Venda Registrada com sucesso!");
-    setCpf("");
-    setNomeProduto("");
-    setDataVenda("");
-    setValorVenda("");
+    Alert.alert("Nota Fiscal Registrada com sucesso!");
+    setNotaFiscal("");
+    setProduto("");
+    setCodigoImposto("");
+    setValorImposto("");
+    setFornecedor("");
+    setDataNotaFiscal("");
   };
 
   return (
@@ -52,30 +65,43 @@ export function Cadastro() {
 
       <ScrollView>
         <Input
-          placeholder="CPF do Funcionário"
+          placeholder="Nota Fiscal"
           placeholderTextColor="#363F5F"
-          value={cpf}
-          onChangeText={(value) => setCpf(value)}
+          value={notaFiscal}
+          onChangeText={(value) => setNotaFiscal(value)}
         />
         <Input
           placeholder="Nome do Produto"
           placeholderTextColor="#363F5F"
-          value={nomeProduto}
-          onChangeText={(value) => setNomeProduto(value)}
+          value={produto}
+          onChangeText={(value) => setProduto(value)}
+        />
+        <Input
+          placeholder="Código do imposto"
+          placeholderTextColor="#363F5F"
+          value={codigoImposto}
+          onChangeText={(value) => setCodigoImposto(value)}
         />
 
         <InputAmount
-          placeholder="Valor de Venda"
+          placeholder="Valor do imposto"
           placeholderTextColor="#363F5F"
-          value={valorVenda}
-          onChangeText={(value) => setValorVenda(value)}
+          value={valorImposto}
+          onChangeText={(value) => setValorImposto(value)}
+        />
+
+        <Input
+          placeholder="Fornecedor"
+          placeholderTextColor="#363F5F"
+          value={fornecedor}
+          onChangeText={(value) => setFornecedor(value)}
         />
 
         <InputDate
-          placeholder="Data de Venda"
+          placeholder="Data de Emissão"
           placeholderTextColor="#363F5F"
-          value={dataVenda}
-          onChangeText={(value) => setDataVenda(value)}
+          value={dataNotaFiscal}
+          onChangeText={(value) => setDataNotaFiscal(value)}
         />
 
         <Button title="Adicionar" onPress={sendData} />

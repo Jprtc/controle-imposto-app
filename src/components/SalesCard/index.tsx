@@ -12,37 +12,34 @@ import {
 
 import { storageNotasDTO } from "../../storage/storageNotasDTO";
 
-// interface SaleProps{
-//   cpfFunc:number | string;
-//   nomeProduto:string;
-//   valorVenda:number;
-//   dataVenda: Date;
-// }
-
 import { convertDateToString } from "../../utils/convertDateToString";
 
 export function SalesCard({
-  nomeProduto,
-  valorVenda,
-  dataVenda,
-  cpfFunc,
+  codigoImposto,
+  dataNotaFiscal,
+  fornecedor,
+  notaFiscal,
+  produto,
+  valorImposto,
 }: storageNotasDTO) {
   return (
     <Container>
       <Header>
-        <Description>{nomeProduto}</Description>
-        <Cpf>CPF:{cpfFunc}</Cpf>
+        <Description>{produto}</Description>
+        <Cpf>Código Imposto:{codigoImposto}</Cpf>
       </Header>
 
       <Header>
-        <Amount>{`R$${valorVenda && valorVenda.toFixed(2)}`}</Amount>
+        <Amount>{`R$${valorImposto && valorImposto.toFixed(2)}`}</Amount>
+        <Amount>{fornecedor}</Amount>
       </Header>
 
       <Footer>
         <Date>
-          {dataVenda &&
-            convertDateToString(dataVenda).toLocaleDateString("pt-BR")}
+          {dataNotaFiscal &&
+            convertDateToString(dataNotaFiscal).toLocaleDateString("pt-BR")}
         </Date>
+        <Cpf>Nota Fiscal:{notaFiscal}</Cpf>
       </Footer>
     </Container>
   );

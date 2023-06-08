@@ -1,6 +1,8 @@
 export type storageNotasDTO = {
-  cpfFunc: string;
-  nomeProduto: string;
-  valorVenda: number;
-  dataVenda: Date;
+  notaFiscal: string;
+  produto: string;
+  codigoImposto: string;
+  valorImposto: number;
+  fornecedor: string;
+  dataNotaFiscal: Date;
 };
